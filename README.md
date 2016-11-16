@@ -52,5 +52,24 @@ Copying all the routes over by hand: right out. Rather, let's write a Lambda fun
 private_rt_filters = [{'Name': 'vpc-id', 'Values': [vpc_id]}, {'Name': 'tag:Name', 'Values': ['private_*']}]
 `
 
+# IAM policy for Lambda Function 
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "ec2:DescribeRouteTables",
+                "ec2:ReplaceRoute",
+                "ec2:CreateRoute",
+                "ec2:DeleteRoute"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        }
+    ]
+}
+```
 
 
