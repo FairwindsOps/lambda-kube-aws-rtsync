@@ -13,6 +13,9 @@ kube_routes_prefix = '100.96'
 #Kubernetes cluster name
 kube_cluster_name = 'working.example.com'
 
+#filter that defines which route tables should be mirrors of the Kubernetes managed route table
+private_rt_filters = [{'Name': 'vpc-id', 'Values': [vpc_id]}, {'Name': 'tag:Name', 'Values': ['private_*']}]
+
 def get_routetables(cl, filters):
  route_table = cl.describe_route_tables(Filters=filters)
  route_table_ids = []
@@ -48,7 +51,6 @@ def do (event, context):
  definitive_kube_routes = get_kube_routes(client, kube_all_routes[kube_routetable[0]], kube_routes_prefix)
 
  #identify all private route tables in VPC
- private_rt_filters = [{'Name': 'vpc-id', 'Values': [vpc_id]}, {'Name': 'tag:Name', 'Values': ['private_*']}]
  private_routetables, private_all_routes = get_routetables(client, private_rt_filters)
 
  #remove kube routetable from list of private routables we're working on
