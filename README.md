@@ -72,4 +72,27 @@ private_rt_filters = [{'Name': 'vpc-id', 'Values': [vpc_id]}, {'Name': 'tag:Name
 }
 ```
 
+# Autoscaling trigger for Lambda Function
+
+1. Under `SNS`, select `Create topic` from dashboard
+ - enter `Topic name` : `kube-node-scaling-actions`
+ - enter `Display name` (max of 10 characters)
+ - click `Create topic`
+
+2. Under `EC2` > `Auto Scaling Groups`, select the ASG managing your Kubernetes nodes
+ - On the `Notifications` tab 
+ - click `Create Notification`
+  - choose the SNS topic created above from the drop down box
+  - make sure `launch` and `terminate` boxed are ticked
+  - click `Save`
+  
+4. Under `Lambda` > `Functions`, select the Lambda function created
+ - On the `Triggers` tab
+ - click `Add trigger`
+  - click the empty dotted-box icon
+  - choose `SNS`
+  - choose the `SNS topic` created above from the drop down box
+  - make sure `Enable trigger` is checked
+  - click `Submit`
+
 
