@@ -35,19 +35,19 @@ Copying all the routes over by hand: right out. Rather, let's write a Lambda fun
 
 # Variables
 
-##AWS region 
+####AWS region 
 `region = 'us-east-1'`
 
-##VPC id containing Kubernetes Cluster
+####VPC id containing Kubernetes Cluster
 `vpc_id = 'vpc-xxxxxxxx'`
 
-##prefix of Kubernetes routes in route tables that should be synced
+####prefix of Kubernetes routes in route tables that should be synced
 `kube_routes_prefix = '100.96'`
 
-##Kubernetes cluster name
+####Kubernetes cluster name
 `kube_cluster_name = 'working.example.com'`
 
-##filter that defines which route tables should be mirrors of the Kubernetes managed route table
+####filter that defines which route tables should be mirrors of the Kubernetes managed route table
 `
 private_rt_filters = [{'Name': 'vpc-id', 'Values': [vpc_id]}, {'Name': 'tag:Name', 'Values': ['private_*']}]
 `
