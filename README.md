@@ -21,7 +21,7 @@ Kubernetes will add one static route per node to a route table in your VPC tagge
 > nodes per cluster. AWS support will sometimes raise the limit to 100, but performance limitations mean they are unlikely
 > to raise it further.
 
-Of concern here is the limitation that only one route table can be tagged `KubernetesCluster`. Tagging multiple route tables will actually prevent Kubernetes from modifying any routes. With only a single functioning route table, you are forced to associate _all_ subnets (regardless of AZ) with that particular route table.  Thus, you are forcing all subnets, in all Availability Zones to use a single NAT Gateway in an AZ they may or may not belong to.  This creates a single point of failure and network latency on outbound calls.
+Of concern here is the limitation that only one route table can be tagged `KubernetesCluster`. Tagging multiple route tables will actually prevent Kubernetes from modifying any routes. [Here](https://github.com/kubernetes/kubernetes/blob/1854bdcb0cc4c31eb9cf8db7b87a893f6209ed2e/pkg/cloudprovider/providers/aws/aws_routes.go#L28-L48) is a link to the bit of code which selects the route table to update. With only a single functioning route table, you are forced to associate _all_ subnets (regardless of AZ) with that particular route table.  Thus, you are forcing all subnets, in all Availability Zones to use a single NAT Gateway in an AZ they may or may not belong to.  This creates a single point of failure and network latency on outbound calls.
 
 **tl;dr**:
 
