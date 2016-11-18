@@ -33,6 +33,8 @@ Let's accept the fact that, currently, the limitation is that Kubernetes can onl
 
 Copying all the routes over by hand: right out. Rather, let's write a Lambda function to do this for us.  Since a new route is created/removed whenever a new Kubernetes node is initialized/terminated, we already have a pretty good trigger available.  We can use scaling activities on the Kubernetes node Autoscaling Group to trigger our Lambda function.
 
+**Note**: After more contemplation, since the scaling activities will happen well before Kubernetes has assigned the new node a CIDR, I am now skeptical that the scaling trigger for this function will function as we really want it to.  It is probably best that we put a cron style trigger in place as well. Since new nodes can take upwards of 10 minutes to come online fully, the cron schedule can be fairly generous. There is no detriment (besides cost?) to running this function on a more frequent basis.
+
 # Variables
 
 ####AWS region 
